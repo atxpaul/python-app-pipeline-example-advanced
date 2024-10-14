@@ -1,0 +1,19 @@
+on:
+    workflow_call:
+
+jobs:
+    lint-code:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Python
+              uses: ./.github/actions/setup-python
+              with:
+                  python-version: '3.12'
+                  environment: 'dev'
+
+            - name: Lint
+              run: |
+                  ruff check . --output-format=github --target-version=py312

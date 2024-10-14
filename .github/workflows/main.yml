@@ -1,0 +1,24 @@
+name: Main
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    lint:
+        uses: ./.github/workflows/_lint.yml
+        secrets: inherit
+
+    unittest:
+        uses: ./.github/workflows/_unittest.yml
+        secrets: inherit
+
+    docker:
+        uses: ./.github/workflows/_docker.yml
+        secrets: inherit
+        needs: [lint, unittest]
